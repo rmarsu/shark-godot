@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3m7e6bcwn1fl"]
+
+[ext_resource type="Script" path="res://guiscore.gd" id="1_d3bh7"]
+
+[sub_resource type="Theme" id="Theme_dkj0w"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_d3bh7")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 15.0
+offset_top = 14.0
+offset_right = 290.0
+offset_bottom = 54.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+
+[node name="goodjob" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 411.0
+offset_top = 290.0
+offset_right = 757.0
+offset_bottom = 343.0
+theme = SubResource("Theme_dkj0w")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "Отлично держитесь , усложним задачу..."
+
+[node name="Hide" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="Hide" to="." method="_on_hide_timeout"]

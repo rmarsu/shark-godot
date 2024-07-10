@@ -1,0 +1,215 @@
+[gd_scene load_steps=20 format=3 uid="uid://bkr2o3neo4j0c"]
+
+[ext_resource type="Script" path="res://animationcamera.gd" id="1_70d3i"]
+[ext_resource type="Script" path="res://main.gd" id="1_wtcjl"]
+[ext_resource type="ArrayMesh" uid="uid://bdu7cx4dky3ju" path="res://images/untitled.obj" id="2_eke3c"]
+[ext_resource type="PackedScene" uid="uid://b5skag5iu0lqh" path="res://player.tscn" id="3_6crd3"]
+[ext_resource type="PackedScene" uid="uid://d3m7e6bcwn1fl" path="res://canvas.tscn" id="5_14tsf"]
+[ext_resource type="ArrayMesh" uid="uid://be0bf06mhwg6j" path="res://objects/floor.obj" id="7_ofsmy"]
+[ext_resource type="ArrayMesh" uid="uid://cfj25je4b1sj7" path="res://objects/bg.obj" id="8_icvm7"]
+[ext_resource type="ArrayMesh" uid="uid://uii5dxmv2omy" path="res://objects/block.obj" id="8_o0j7k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w50xe"]
+metallic_specular = 0.2
+roughness = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_1cmd8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ahftv"]
+
+[sub_resource type="Sky" id="Sky_dsoyf"]
+sky_material = SubResource("ProceduralSkyMaterial_ahftv")
+
+[sub_resource type="Environment" id="Environment_nkryh"]
+background_mode = 1
+background_color = Color(0.0901961, 0.411765, 0.678431, 1)
+sky = SubResource("Sky_dsoyf")
+ambient_light_source = 2
+ambient_light_color = Color(0.584314, 0.882353, 0.992157, 1)
+ambient_light_energy = 0.83
+fog_enabled = true
+fog_light_color = Color(0.270588, 0.415686, 0.764706, 1)
+fog_light_energy = 0.77
+fog_sun_scatter = 0.5
+fog_sky_affect = 0.87
+fog_height = -0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iamuo"]
+
+[sub_resource type="Animation" id="Animation_3tcmy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(4.402, 20.774, -32.095)]
+}
+
+[sub_resource type="Animation" id="Animation_1cpyr"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.87055, 0.87055, 0.87055),
+"update": 0,
+"values": [Vector3(0, -3.14159, 0), Vector3(-0.0872665, -3.14159, 0), Vector3(0, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.707107, 1.51572, 1.51572),
+"update": 0,
+"values": [Vector3(4.402, 20.774, -32.095), Vector3(4.402, 19, -32.095), Vector3(4.402, 20.774, -32.095)]
+}
+
+[sub_resource type="Animation" id="Animation_vhho4"]
+resource_name = "idle_harder"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 3.3, 5.51464),
+"transitions": PackedFloat32Array(0.87055, 0.87055, 0.87055, 1),
+"update": 0,
+"values": [Vector3(0, -3.14159, -0.0174533), Vector3(-0.0872665, -3.14159, 0.0174533), Vector3(0, -3.14159, 0), Vector3(0.0174533, -3.14159, -0.0523599)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.9, 3.3),
+"transitions": PackedFloat32Array(1.03527, 1.03527, 1.03527, 1.03527),
+"update": 0,
+"values": [Vector3(4.402, 20.774, -32.095), Vector3(6.147, 19.861, -32.095), Vector3(1, 19.818, -32.095), Vector3(4.402, 20.774, -32.095)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eh12i"]
+_data = {
+"RESET": SubResource("Animation_3tcmy"),
+"idle": SubResource("Animation_1cpyr"),
+"idle_harder": SubResource("Animation_vhho4")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4prrx"]
+albedo_color = Color(0.65098, 0.384314, 0.32549, 1)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_70d3i")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -2.53518e-06, 0, 1, 0, 2.53518e-06, 0, -1, 4.402, 20.774, -32.095)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0.000582144, 0.000105581, -0.000582139, 1, -4.58461e-05, -0.000105608, 4.57837e-05, 1, 0.832251, -2.85422, -16.7525)
+material_override = SubResource("StandardMaterial3D_w50xe")
+transparency = 0.8
+cast_shadow = 0
+emitting = false
+amount = 20
+lifetime = 7.09
+mesh = SubResource("SphereMesh_1cmd8")
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, -1.02, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nkryh")
+
+[node name="Spawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.9698, -4.42955, 0)
+script = ExtResource("1_wtcjl")
+
+[node name="Untitled" type="MeshInstance3D" parent="Spawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.6175, -4.31927, 4.64435)
+material_override = SubResource("StandardMaterial3D_iamuo")
+transparency = 1.0
+mesh = ExtResource("2_eke3c")
+skeleton = NodePath("../..")
+
+[node name="EnemiesSpawnTimeout" type="Timer" parent="Spawner"]
+wait_time = 2.0
+autostart = true
+
+[node name="GoldenFish" type="Timer" parent="Spawner"]
+wait_time = 15.0
+autostart = true
+
+[node name="CanvasLayer" parent="." instance=ExtResource("5_14tsf")]
+
+[node name="Harder" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eh12i")
+}
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.92262, 0, -5.43178e-07, 0, 7.66719, 0, 6.05194e-07, 0, -6.21323, -5.61034, -15.5095, -1.67843)
+mesh = ExtResource("7_ofsmy")
+
+[node name="Block" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.83637, 0, -2.3175, 0, 2.95686, 0, 2.3175, 0, -1.83637, -14.7411, -20.5297, -14.2986)
+material_override = SubResource("StandardMaterial3D_4prrx")
+cast_shadow = 2
+mesh = ExtResource("8_o0j7k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.58106, 42.1597, -11.3611)
+light_color = Color(0.729412, 0.894118, 0.968627, 1)
+light_energy = 180.59
+omni_range = 70.822
+
+[node name="Bg" type="MeshInstance3D" parent="."]
+transform = Transform3D(-11.6334, 0, -1.19209e-06, 0, 11.6334, 0, 1.19209e-06, 0, -11.6334, -8.8689, 29.4131, -16.4353)
+mesh = ExtResource("8_icvm7")
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("3_6crd3")]
+transform = Transform3D(4.47035e-08, 0, 1, 0, 1, 0, -1, 0, 4.47035e-08, 0, 19, 0)
+
+[connection signal="timeout" from="Spawner/EnemiesSpawnTimeout" to="Spawner" method="_on_enemies_spawn_timeout_timeout"]
+[connection signal="timeout" from="Spawner/GoldenFish" to="Spawner" method="_on_golden_fish_timeout"]
+[connection signal="timeout" from="Harder" to="." method="_on_harder_timeout"]
+[connection signal="timeout" from="Harder" to="CanvasLayer" method="_on_harder_timeout"]

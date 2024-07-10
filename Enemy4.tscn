@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://dh5hr0bm8xmxs"]
+
+[ext_resource type="Script" path="res://bimba.gd" id="1_10axx"]
+[ext_resource type="Script" path="res://dying.gd" id="2_o8cm4"]
+[ext_resource type="Texture2D" uid="uid://dvoj6ukb1xd3n" path="res://images/mine.png" id="3_qfbmo"]
+
+[sub_resource type="Animation" id="Animation_kh407"]
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(0.554785, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(14.15, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uy77v"]
+resource_name = "idle"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(0.517632, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(25.67, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hgokv"]
+_data = {
+"RESET": SubResource("Animation_kh407"),
+"idle": SubResource("Animation_uy77v")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbagg"]
+transparency = 1
+albedo_texture = ExtResource("3_qfbmo")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tlqcg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fr7ua"]
+size = Vector3(2.12875, 2.24017, 4.21094)
+
+[node name="enemy4" type="Node3D"]
+script = ExtResource("1_10axx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Area3D/Untitled")
+libraries = {
+"": SubResource("AnimationLibrary_hgokv")
+}
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.20974, 0, 0, 0, 1.25737, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("2_o8cm4")
+
+[node name="Untitled" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(-1.45725, 0.00144218, -1.0627, 0.975088, 0.000296226, -1.58818, -0.00091354, -1.98435, -0.00100942, 0.0743137, 1.12121, 0.149228)
+material_override = SubResource("StandardMaterial3D_pbagg")
+mesh = SubResource("PlaneMesh_tlqcg")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(-0.560544, 0.849558, -8.96328e-08, 0.796628, 0.597788, 1.27291e-07, 8.51152e-08, -3.1002e-11, -1.78167, 0.0838815, 1.09114, 0.775296)
+shape = SubResource("BoxShape3D_fr7ua")
+
+[node name="DestroyTouched" type="Timer" parent="Area3D"]
+wait_time = 0.503
+
+[node name="Destroy" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
+[connection signal="timeout" from="Area3D/DestroyTouched" to="Area3D" method="_on_destroy_touched_timeout"]
+[connection signal="timeout" from="Destroy" to="." method="_on_destroy_timeout"]

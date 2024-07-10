@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://dr420knbv0jjy"]
+
+[ext_resource type="Script" path="res://animation.gd" id="1_jxprr"]
+[ext_resource type="Script" path="res://Area3D.gd" id="2_j0x4a"]
+[ext_resource type="Texture2D" uid="uid://k8u31w15melj" path="res://images/fish_lil_flipped.png" id="3_gmf0n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_isfme"]
+transparency = 1
+albedo_texture = ExtResource("3_gmf0n")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tlqcg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fr7ua"]
+size = Vector3(2.12875, 2.24017, 4.21094)
+
+[sub_resource type="Animation" id="Animation_ql0f0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fi0wj"]
+resource_name = "idle"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(0.594603, 0.594603),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(50.315, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2npkg"]
+_data = {
+"RESET": SubResource("Animation_ql0f0"),
+"idle": SubResource("Animation_fi0wj")
+}
+
+[node name="enemy3" type="Node3D"]
+script = ExtResource("1_jxprr")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1.20974, 0, 0, 0, 1.25737, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("2_j0x4a")
+
+[node name="Untitled" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(-1.36731, 0.00146242, -1.19627, 1.09764, 0.000170195, -1.49016, -0.00091354, -1.98435, -0.00100942, 0.0628104, 1.12121, 0.139707)
+material_override = SubResource("StandardMaterial3D_isfme")
+mesh = SubResource("PlaneMesh_tlqcg")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(-0.560544, 0.849558, -8.96328e-08, 0.796628, 0.597788, 1.27291e-07, 8.51152e-08, -3.1002e-11, -1.78167, 0.0459059, 1.10286, 0.775296)
+shape = SubResource("BoxShape3D_fr7ua")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2npkg")
+}
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

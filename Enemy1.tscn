@@ -1,0 +1,104 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqk6swwenwovi"]
+
+[ext_resource type="Script" path="res://animation_loop.gd" id="1_7rb8o"]
+[ext_resource type="Script" path="res://Area3D.gd" id="1_t21nh"]
+[ext_resource type="Texture2D" uid="uid://donsfo58jl17n" path="res://images/manta.png" id="2_w0yio"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mf3f"]
+transparency = 1
+albedo_texture = ExtResource("2_w0yio")
+emission = Color(0.415686, 0.415686, 0.415686, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0hlgp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fr7ua"]
+size = Vector3(3.90979, 3.81372, 4.21094)
+
+[sub_resource type="Animation" id="Animation_gem5u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 6.59, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.74542, 2.74542, 2.74542)]
+}
+
+[sub_resource type="Animation" id="Animation_xtos6"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area3D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(2.2974, 0.5, 0.5),
+"update": 0,
+"values": [Vector3(0, 6.59, 0), Vector3(0, 12.09, 0), Vector3(0, 6.59, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ejh8"]
+_data = {
+"RESET": SubResource("Animation_gem5u"),
+"idle": SubResource("Animation_xtos6")
+}
+
+[node name="enemy" type="Node3D"]
+script = ExtResource("1_7rb8o")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(2.74542, 0, 0, 0, 2.74542, 0, 0, 0, 2.74542, 0, 6.59, 0)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_t21nh")
+
+[node name="Untitled" type="MeshInstance3D" parent="Area3D"]
+transform = Transform3D(-1.80005, -8.90475e-08, -7.66199e-08, 7.86827e-08, 8.90471e-08, -1.75286, 7.86823e-08, -2.03716, -7.66199e-08, 0.0270572, 1.34704, -0.754655)
+material_override = SubResource("StandardMaterial3D_4mf3f")
+mesh = SubResource("PlaneMesh_0hlgp")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.82908, 0.00898665, 1.34234, -1.6586)
+shape = SubResource("BoxShape3D_fr7ua")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3ejh8")
+}
+
+[connection signal="area_entered" from="Area3D" to="Area3D" method="_on_area_entered"]
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
